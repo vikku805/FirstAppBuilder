@@ -1,80 +1,599 @@
-# Firstappbuilder
+# FirstAppBuilder
 
-Welcome to my Adobe I/O Application!
+![Adobe App Builder](https://img.shields.io/badge/Adobe-App%20Builder-red)
+![Node.js](https://img.shields.io/badge/Node.js-v20-green)
+![React](https://img.shields.io/badge/React-Frontend-blue)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
-## Setup
+## Overview
 
-- Populate the `.env` file in the project root and fill it as shown [below](#env)
+FirstAppBuilder is a sample Adobe App Builder project that demonstrates how to build, deploy, and manage cloud-native applications using Adobe App Builder and Adobe I/O Runtime.
 
-## Local Dev
+Adobe App Builder enables developers to create scalable, serverless applications that integrate seamlessly with Adobe Experience Cloud products such as Adobe Commerce, Adobe Experience Manager, Adobe Analytics, and Adobe Experience Platform.
 
-- `aio app run` to start your local Dev server
-- App will run on `localhost:9080` by default
+This project serves as a starter application for learning Adobe App Builder fundamentals, including authentication, Adobe I/O Runtime actions, Adobe I/O Management APIs, custom services, and deployment workflows.
 
-By default the UI will be served locally but actions will be deployed and served from Adobe I/O Runtime. To run your actions locally use the `aio app dev` option.
+---
 
-For more information on the difference between `aio app run` and `aio app dev`, see [here](https://developer.adobe.com/app-builder/docs/guides/development/#aio-app-dev-vs-aio-app-run)
+# What is Adobe App Builder?
 
-## Test & Coverage
+Adobe App Builder is Adobe's extensibility platform that allows developers to build secure, scalable, event-driven applications without managing infrastructure.
 
-- Run `aio app test` to run unit tests for ui and actions
-- Run `aio app test --e2e` to run e2e tests
+It provides:
 
-## Deploy & Cleanup
+- Serverless Runtime Actions
+- Adobe I/O Events
+- Adobe I/O Management APIs
+- Custom UI Extensions
+- Secure Authentication
+- Event Driven Architecture
+- Cloud Native Development
 
-- `aio app deploy` to build and deploy all actions on Runtime and static files to CDN
-- `aio app undeploy` to undeploy the app
+---
 
-## Config
+# Benefits of Adobe App Builder
 
-### `.env`
+### Serverless Architecture
 
-You can generate this file using the command `aio app use`. 
+No server management required.
+
+### Faster Development
+
+Rapid development and deployment cycles.
+
+### Adobe Commerce Integration
+
+Extend Adobe Commerce without modifying core code.
+
+### Scalability
+
+Applications automatically scale based on traffic.
+
+### Security
+
+Built-in Adobe authentication and authorization mechanisms.
+
+### Cost Efficient
+
+Pay only for the resources consumed.
+
+### Extensible
+
+Integrates with third-party APIs and enterprise systems.
+
+---
+
+# Tech Stack
+
+- Adobe App Builder
+- Adobe I/O Runtime
+- Adobe I/O Management API
+- Node.js
+- NPM
+- React
+- JavaScript (ES6+)
+- Adobe Developer Console
+- Postman
+- Git & GitHub
+
+---
+
+# Prerequisites
+
+Before starting, install:
+
+- NVM (Node Version Manager)
+- Node.js v20
+- Git
+- Adobe Developer Console Account
+- Adobe App Builder Access
+- Postman (Optional)
+
+---
+
+# Step 1: Install NVM
+
+Download:
+
+https://github.com/coreybutler/nvm-windows/releases
+
+Install:
 
 ```bash
-# This file must **not** be committed to source control
-
-## please provide your Adobe I/O Runtime credentials
-# AIO_RUNTIME_AUTH=
-# AIO_RUNTIME_NAMESPACE=
+nvm version
 ```
 
-### `app.config.yaml`
+---
 
-- Main configuration file that defines an application's implementation. 
-- More information on this file, application configuration, and extension configuration 
-  can be found [here](https://developer.adobe.com/app-builder/docs/guides/configuration/#appconfigyaml)
+# Step 2: Install Node.js
 
-#### Action Dependencies
+Install Node 20:
 
-- You have two options to resolve your actions' dependencies:
-
-  1. **Packaged action file**: Add your action's dependencies to the root
-   `package.json` and install them using `npm install`. Then set the `function`
-   field in `app.config.yaml` to point to the **entry file** of your action
-   folder. We will use `webpack` to package your code and dependencies into a
-   single minified js file. The action will then be deployed as a single file.
-   Use this method if you want to reduce the size of your actions.
-
-  2. **Zipped action folder**: In the folder containing the action code add a
-     `package.json` with the action's dependencies. Then set the `function`
-     field in `app.config.yaml` to point to the **folder** of that action. We will
-     install the required dependencies within that directory and zip the folder
-     before deploying it as a zipped action. Use this method if you want to keep
-     your action's dependencies separated.
-
-## Debugging in VS Code
-
-While running your local server (`aio app dev`), both UI and actions can be debugged. To do so follow the instructions [here](https://developer.adobe.com/app-builder/docs/guides/development/#debugging)
-
-## Typescript support for UI
-
-To use typescript use `.tsx` extension for react components and add a `tsconfig.json` 
-and make sure you have the below config added
+```bash
+nvm install 20
 ```
- {
-  "compilerOptions": {
-      "jsx": "react"
+
+Use Node 20:
+
+```bash
+nvm use 20
+```
+
+Verify:
+
+```bash
+node -v
+```
+
+Expected:
+
+```bash
+v20.x.x
+```
+
+Verify npm:
+
+```bash
+npm -v
+```
+
+---
+
+# Step 3: Install Adobe AIO CLI
+
+Install globally:
+
+```bash
+npm install -g @adobe/aio-cli
+```
+
+Verify:
+
+```bash
+aio help
+```
+
+Update CLI:
+
+```bash
+npm install -g @adobe/aio-cli
+```
+
+---
+
+# Step 4: Login to Adobe
+
+Authenticate Adobe account:
+
+```bash
+aio login
+```
+
+This command:
+
+- Opens Adobe Login page
+- Authenticates account
+- Generates Adobe CLI credentials
+
+---
+
+# Step 5: Create Adobe App Builder Project
+
+Initialize project:
+
+```bash
+aio app init
+```
+
+Follow setup wizard:
+
+- Select Organization
+- Select Project
+- Select Workspace
+- Configure Template
+
+After completion:
+
+```bash
+cd FirstAppBuilder
+```
+
+---
+
+# Step 6: Install Project Dependencies
+
+Install all project dependencies:
+
+```bash
+npm install
+```
+
+Verify:
+
+```bash
+npm list --depth=0
+```
+
+If packages are corrupted:
+
+```bash
+rmdir /s /q node_modules
+del package-lock.json
+npm install
+```
+
+---
+
+# Step 7: Run Application
+
+Start development server:
+
+```bash
+aio app run
+```
+
+Application URL:
+
+```text
+https://localhost:9080
+```
+
+Actions URL:
+
+```text
+https://localhost:9080/#/actions
+```
+
+---
+
+# Add Adobe Services
+
+Add Adobe services:
+
+```bash
+aio app add services
+```
+
+This enables:
+
+- Adobe I/O Management API
+- Adobe Runtime APIs
+- Additional Adobe Services
+
+---
+
+# Generate Public URL
+
+```bash
+aio app get-url
+```
+
+---
+
+# Authentication Configuration
+
+Update:
+
+```yaml
+app.config.yaml
+```
+
+Add:
+
+```yaml
+require-adobe-auth: true
+```
+
+Restart:
+
+```bash
+aio app run
+```
+
+---
+
+# Adobe I/O Management API Setup
+
+## Add API
+
+1. Open Adobe Developer Console
+2. Open App Builder Project
+3. Add I/O Management API
+
+## Download Credentials
+
+Download environment variables.
+
+## Configure Postman
+
+Import downloaded variables into Postman Environment.
+
+## Token Endpoint
+
+```text
+https://ims-na1.adobelogin.com/ims/token/v3
+```
+
+Use cURL or Postman to generate access tokens.
+
+---
+
+# Add Runtime Actions
+
+Generate a new action:
+
+```bash
+aio app add action
+```
+
+Actions are created inside:
+
+```text
+actions/
+```
+
+Example:
+
+```javascript
+async function main(params) {
+  return {
+    statusCode: 200,
+    body: {
+      message: "Hello World"
     }
-  } 
+  };
+}
+
+exports.main = main;
 ```
+
+---
+
+# Adobe Commerce Integration
+
+Reference Starter Kit:
+
+https://github.com/adobe/commerce-integration-starter-kit
+
+OAuth Example:
+
+https://github.com/adobe/commerce-integration-starter-kit/blob/main/actions/oauth1a.js
+
+---
+
+# Logs and Monitoring
+
+Application logs:
+
+```bash
+aio app logs
+```
+
+Runtime activations:
+
+```bash
+aio runtime activation list
+```
+
+Activation details:
+
+```bash
+aio runtime activation get <activation-id>
+```
+
+Activation logs:
+
+```bash
+aio runtime activation log <activation-id>
+```
+
+---
+
+# Troubleshooting
+
+## Fix SystemRoot Environment Variable
+
+Press:
+
+```text
+Win + R
+```
+
+Run:
+
+```text
+sysdm.cpl
+```
+
+Navigate:
+
+```text
+Advanced → Environment Variables
+```
+
+Add:
+
+Variable Name:
+
+```text
+SystemRoot
+```
+
+Variable Value:
+
+```text
+C:\Windows
+```
+
+Restart:
+
+- VS Code
+- PowerShell
+- CMD
+
+Verify:
+
+```bash
+echo %SystemRoot%
+```
+
+Expected:
+
+```text
+C:\Windows
+```
+
+Retry:
+
+```bash
+aio app run
+```
+
+---
+
+# Clean Reinstallation
+
+Remove dependencies:
+
+```bash
+rmdir /s /q node_modules
+```
+
+Delete lock file:
+
+```bash
+del package-lock.json
+```
+
+Install again:
+
+```bash
+npm install
+```
+
+---
+
+# Useful Commands
+
+### Login
+
+```bash
+aio login
+```
+
+### Run Application
+
+```bash
+aio app run
+```
+
+### Deploy Application
+
+```bash
+aio app deploy
+```
+
+### Get Application URL
+
+```bash
+aio app get-url
+```
+
+### Add Services
+
+```bash
+aio app add services
+```
+
+### Add Action
+
+```bash
+aio app add action
+```
+
+### View Logs
+
+```bash
+aio app logs
+```
+
+---
+
+# Project Structure
+
+```text
+FirstAppBuilder/
+│
+├── actions/
+│   ├── hello/
+│   └── commerce/
+│
+├── web-src/
+│
+├── extensions/
+│
+├── app.config.yaml
+├── package.json
+├── .env
+├── README.md
+│
+└── node_modules/
+```
+
+---
+
+# Git Setup
+
+Clone repository:
+
+```bash
+git clone https://github.com/vikku805/FirstAppBuilder.git
+```
+
+Navigate:
+
+```bash
+cd FirstAppBuilder
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Add remote:
+
+```bash
+git remote add origin https://github.com/vikku805/FirstAppBuilder.git
+```
+
+Push changes:
+
+```bash
+git add .
+git commit -m "Initial Commit"
+git push -u origin main
+```
+
+---
+
+# Screenshots
+
+## Adobe Developer Console
+
+_Add your Developer Console screenshot here._
+
+
+---
+
+# Author
+
+**Vikas Gupta**
+
+Senior Adobe Commerce (Magento) Developer
+
+Adobe Certified Professional – Adobe Commerce Developer (Cloud)
+
+GitHub:
+https://github.com/vikku805
