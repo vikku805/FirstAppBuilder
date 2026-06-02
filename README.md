@@ -582,8 +582,7 @@ git push -u origin main
 
 ## Adobe Developer Console
 
-_Add your Developer Console screenshot here._
-
+<img width="1918" height="814" alt="image" src="https://github.com/user-attachments/assets/6c9b29d4-7c5f-458d-b497-2592cda50a83" />
 
 ---
 
