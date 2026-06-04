@@ -30,11 +30,6 @@ async function main (params) {
     // log parameters, only if params.LOG_LEVEL === 'debug'
     logger.debug(stringParameters(params))
 
-    return {
-      sttatusCode: 200, 
-      body: {message: 'Hello ertrtrtrtrtrtrtrtrtrtrt'}
-    }
-
     // check for missing request input parameters and headers
     const requiredParams = [/* add required params */]
     const requiredHeaders = ['Authorization']
