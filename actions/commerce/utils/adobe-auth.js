@@ -47,17 +47,23 @@ function resolveImsConfig(params) {
 }
 
 /**
+ * Creates a validated IMS auth provider instance from environment parameters.
+ * @param {object} params - Environment parameters containing ImsAuth configuration
+ * @returns IMS auth provider
+ */
+function createImsAuthProvider(params) {
+  const config = resolveImsConfig(params);
+  assertImsAuthParams(config);
+  return getImsAuthProvider(config);
+}
+
+/**
  * Generate access token to connect with Adobe tools (e.g. IO Events)
  * @param {object} params includes env parameters
  * @returns the access token
  */
 function getAdobeAccessToken(params) {
-  const config = resolveImsConfig(params);
-
-  assertImsAuthParams(config);
-  const imsAuthProvider = getImsAuthProvider(config);
-
-  return imsAuthProvider.getAccessToken();
+  return createImsAuthProvider(params).getAccessToken();
 }
 
 /**
@@ -66,11 +72,7 @@ function getAdobeAccessToken(params) {
  * @returns the headers with access token
  */
 function getAdobeAccessHeaders(params) {
-  const config = resolveImsConfig(params);
-  assertImsAuthParams(config);
-  const imsAuthProvider = getImsAuthProvider(config);
-
-  return imsAuthProvider.getHeaders();
+  return createImsAuthProvider(params).getHeaders();
 }
 
 module.exports = {

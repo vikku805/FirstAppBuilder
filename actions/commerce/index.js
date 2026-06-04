@@ -14,59 +14,36 @@
  */
 
 
-const fetch = require('node-fetch')
-const { Core } = require('@adobe/aio-sdk')
-const { errorResponse, getBearerToken, stringParameters, checkMissingRequestInputs } = require('../utils')
+const { createActionHandler } = require('../utils')
 const { getClient } = require('../oauth1a')
 
 // main function that will be executed by Adobe I/O Runtime
-async function main (params) {
-  // create a Logger
-  const logger = Core.Logger('main', { level: params.LOG_LEVEL || 'info' })
+const main = createActionHandler(
+  {
+    actionName: 'main',
+    requiredParams: ['sku'],
+    requiredHeaders: ['Authorization']
+  },
+  async (params, { logger }) => {
+    const client = getClient({
+      params,
+      url: params.COMMERCE_URL,
+      consumerKey: params.COMMERCE_CONSUMER_KEY,
+      consumerSecret: params.COMMERCE_CONSUMER_SECRET,
+      accessToken: params.COMMERCE_ACCESS_TOKEN,
+      accessTokenSecret: params.COMMERCE_ACCESS_TOKEN_SECRET
+    }, logger)
 
-  try {
-    // 'info' is the default level if not set
-    logger.info('Calling the main action')
-
-    // log parameters, only if params.LOG_LEVEL === 'debug'
-    logger.debug(stringParameters(params))
-
-    // check for missing request input parameters and headers
-    const requiredParams = ['sku']
-    const requiredHeaders = ['Authorization']
-    const errorMessage = checkMissingRequestInputs(params, requiredParams, requiredHeaders)
-    if (errorMessage) {
-      // return and log client errors
-      return errorResponse(400, errorMessage, logger)
-    }
-
-  const client = getClient({
-  params,
-        url: params.COMMERCE_URL,
-        consumerKey: params.COMMERCE_CONSUMER_KEY,
-        consumerSecret: params.COMMERCE_CONSUMER_SECRET,
-        accessToken: params.COMMERCE_ACCESS_TOKEN,
-        accessTokenSecret: params.COMMERCE_ACCESS_TOKEN_SECRET
-      }, logger)
-    // Fetch data adobe commerce api
     logger.info(`URL: ${params.COMMERCE_URL}`)
     logger.info(`SKU: ${params.sku}`)
-    
+
     const result = await client.get(`products/${params.sku}`)
-    const response = {
+
+    return {
       statusCode: 200,
       body: result
     }
-
-    // log the response status code
-    logger.info(`${response.statusCode}: successful request`)
-    return response
-  } catch (error) {
-    // log any server errors
-    logger.error(error)
-    // return with 500
-    return errorResponse(500, 'server error', logger)
   }
-}
+)
 
 exports.main = main
