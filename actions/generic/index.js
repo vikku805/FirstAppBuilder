@@ -32,7 +32,7 @@ async function main (params) {
 
     return {
       sttatusCode: 200, 
-      body: {message: 'Hello Worldccccccccccccc'}
+      body: {message: 'Hello ertrtrtrtrtrtrtrtrtrtrt'}
     }
 
     // check for missing request input parameters and headers

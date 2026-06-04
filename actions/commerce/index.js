@@ -17,6 +17,7 @@
 const fetch = require('node-fetch')
 const { Core } = require('@adobe/aio-sdk')
 const { errorResponse, getBearerToken, stringParameters, checkMissingRequestInputs } = require('../utils')
+const { getClient } = require('../oauth1a')
 
 // main function that will be executed by Adobe I/O Runtime
 async function main (params) {
@@ -31,7 +32,7 @@ async function main (params) {
     logger.debug(stringParameters(params))
 
     // check for missing request input parameters and headers
-    const requiredParams = [/* add required params */]
+    const requiredParams = ['sku']
     const requiredHeaders = ['Authorization']
     const errorMessage = checkMissingRequestInputs(params, requiredParams, requiredHeaders)
     if (errorMessage) {
@@ -39,21 +40,22 @@ async function main (params) {
       return errorResponse(400, errorMessage, logger)
     }
 
-    // extract the user Bearer token from the Authorization header
-    const token = getBearerToken(params)
-
-    // replace this with the api you want to access
-    const apiEndpoint = 'https://adobeioruntime.net/api/v1'
-
-    // fetch content from external api endpoint
-    const res = await fetch(apiEndpoint)
-    if (!res.ok) {
-      throw new Error('request to ' + apiEndpoint + ' failed with status code ' + res.status)
-    }
-    const content = await res.json()
+  const client = getClient({
+  params,
+        url: params.COMMERCE_URL,
+        consumerKey: params.COMMERCE_CONSUMER_KEY,
+        consumerSecret: params.COMMERCE_CONSUMER_SECRET,
+        accessToken: params.COMMERCE_ACCESS_TOKEN,
+        accessTokenSecret: params.COMMERCE_ACCESS_TOKEN_SECRET
+      }, logger)
+    // Fetch data adobe commerce api
+    logger.info(`URL: ${params.COMMERCE_URL}`)
+    logger.info(`SKU: ${params.sku}`)
+    
+    const result = await client.get(`products/${params.sku}`)
     const response = {
       statusCode: 200,
-      body: content
+      body: result
     }
 
     // log the response status code

@@ -13,7 +13,7 @@ application:
             inputs:
               LOG_LEVEL: debug
             annotations:
-              require-adobe-auth: true
+              require-adobe-auth: false
               final: true
           publish-events:
             function: actions/publish-events/index.js
@@ -21,9 +21,11 @@ application:
             runtime: nodejs:22
             inputs:
               LOG_LEVEL: debug
-              apiKey: $SERVICE_API_KEY
+              apiKey: 5d745aaeb364422b8459878afdd9ab76
+              providerId: 71893478-b36b-4bc9-8f88-1f43680be6b4
+              eventCode: com.postman.productsold
             annotations:
-              require-adobe-auth: true
+              require-adobe-auth: false
               final: true
           commerce:
             function: actions/commerce/index.js
@@ -31,6 +33,11 @@ application:
             runtime: nodejs:16
             inputs:
               LOG_LEVEL: debug
+              COMMERCE_URL: $COMMERCE_URL
+              COMMERCE_CONSUMER_KEY: $COMMERCE_CONSUMER_KEY
+              COMMERCE_CONSUMER_SECRET: $COMMERCE_CONSUMER_SECRET
+              COMMERCE_ACCESS_TOKEN: $COMMERCE_ACCESS_TOKEN
+              COMMERCE_ACCESS_TOKEN_SECRET: $COMMERCE_ACCESS_TOKEN_SECRET
             annotations:
               require-adobe-auth: true
               final: true
