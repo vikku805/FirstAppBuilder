@@ -129,9 +129,50 @@ function errorResponse (statusCode, message, logger) {
   }
 }
 
+/**
+ *
+ * Wraps an action handler with standard boilerplate: logger creation,
+ * parameter logging, input validation, and error handling.
+ *
+ * @param {object} options
+ * @param {string} options.actionName label for the logger (defaults to 'main')
+ * @param {array}  options.requiredParams list of required input parameters
+ * @param {array}  options.requiredHeaders list of required input headers
+ * @param {Function} handler async (params, { logger, token }) => response object
+ *
+ * @returns {Function} an action main function
+ *
+ */
+function createActionHandler ({ actionName = 'main', requiredParams = [], requiredHeaders = [] }, handler) {
+  return async function main (params) {
+    const { Core } = require('@adobe/aio-sdk')
+    const logger = Core.Logger(actionName, { level: params.LOG_LEVEL || 'info' })
+
+    try {
+      logger.info(`Calling the ${actionName} action`)
+      logger.debug(stringParameters(params))
+
+      const errorMessage = checkMissingRequestInputs(params, requiredParams, requiredHeaders)
+      if (errorMessage) {
+        return errorResponse(400, errorMessage, logger)
+      }
+
+      const token = getBearerToken(params)
+      const response = await handler(params, { logger, token })
+
+      logger.info(`${response.statusCode}: successful request`)
+      return response
+    } catch (error) {
+      logger.error(error)
+      return errorResponse(500, 'server error', logger)
+    }
+  }
+}
+
 module.exports = {
   errorResponse,
   getBearerToken,
   stringParameters,
-  checkMissingRequestInputs
+  checkMissingRequestInputs,
+  createActionHandler
 }

@@ -5,48 +5,36 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
+const navItems = [
+  { to: '/', label: 'Home', end: true },
+  { to: '/actions', label: 'Your App Actions' },
+  { to: '/about', label: 'About App Builder' },
+  { to: '/product', label: 'Products' }
+]
+
+function NavItem ({ to, label, end }) {
+  return (
+    <li className="SideNav-item">
+      <NavLink
+        className={({ isActive }) => `SideNav-itemLink ${isActive ? 'is-selected' : ''}`}
+        aria-current="page"
+        end={end}
+        to={to}
+      >
+        {label}
+      </NavLink>
+    </li>
+  )
+}
+
 function SideBar () {
-    return (
-        <ul className="SideNav">
-            <li className="SideNav-item">
-                <NavLink
-                    className={({ isActive }) => `SideNav-itemLink ${isActive ? 'is-selected' : ''}`}
-                    aria-current="page"
-                    end
-                    to="/"
-                >
-                    Home
-                </NavLink>
-            </li>
-            <li className="SideNav-item">
-                <NavLink
-                    className={({ isActive }) => `SideNav-itemLink ${isActive ? 'is-selected' : ''}`}
-                    aria-current="page"
-                    to="/actions"
-                >
-                    Your App Actions
-                </NavLink>
-            </li>
-            <li className="SideNav-item">
-                <NavLink
-                    className={({ isActive }) => `SideNav-itemLink ${isActive ? 'is-selected' : ''}`}
-                    aria-current="page"
-                    to="/about"
-                >
-                    About App Builder
-                </NavLink>
-            </li>
-             <li className="SideNav-item">
-                <NavLink
-                    className={({ isActive }) => `SideNav-itemLink ${isActive ? 'is-selected' : ''}`}
-                    aria-current="page"
-                    to="/product"
-                >
-                    Products
-                </NavLink>
-            </li>
-        </ul>
-    )
+  return (
+    <ul className="SideNav">
+      {navItems.map((item) => (
+        <NavItem key={item.to} {...item} />
+      ))}
+    </ul>
+  )
 }
 
 export default SideBar

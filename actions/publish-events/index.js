@@ -14,38 +14,21 @@
  */
 
 
-const { Core, Events } = require('@adobe/aio-sdk')
+const { Events } = require('@adobe/aio-sdk')
 const uuid = require('uuid')
 const {
   CloudEvent
 } = require("cloudevents");
-const { errorResponse, getBearerToken, stringParameters, checkMissingRequestInputs } = require('../utils')
+const { createActionHandler } = require('../utils')
 
 // main function that will be executed by Adobe I/O Runtime
-async function main (params) {
-  // create a Logger
-  const logger = Core.Logger('main', { level: params.LOG_LEVEL || 'info' })
-
-  try {
-    // 'info' is the default level if not set
-    logger.info('Calling the main action')
-
-    // log parameters, only if params.LOG_LEVEL === 'debug'
-    logger.debug(stringParameters(params))
-
-    // check for missing request input parameters and headers
-    const requiredParams = ['apiKey', 'providerId', 'eventCode', 'payload']
-    const requiredHeaders = ['Authorization', 'x-gw-ims-org-id']
-    const errorMessage = checkMissingRequestInputs(params, requiredParams, requiredHeaders)
-    if (errorMessage) {
-      // return and log client errors
-      return errorResponse(400, errorMessage, logger)
-    }
-
-    // extract the user Bearer token from the Authorization header
-    const token = getBearerToken(params)
-
-    
+const main = createActionHandler(
+  {
+    actionName: 'main',
+    requiredParams: ['apiKey', 'providerId', 'eventCode', 'payload'],
+    requiredHeaders: ['Authorization', 'x-gw-ims-org-id']
+  },
+  async (params, { logger, token }) => {
     // initialize the client
     const orgId = params.__ow_headers['x-gw-ims-org-id']
     const eventsClient = await Events.init(orgId, params.apiKey, token)
@@ -62,20 +45,12 @@ async function main (params) {
       logger.info('Published to I/O Events but there were not interested registrations')
       statusCode = 204
     }
-    const response = {
+
+    return {
       statusCode: statusCode,
     }
-
-    // log the response status code
-    logger.info(`${response.statusCode}: successful request`)
-    return response
-  } catch (error) {
-    // log any server errors
-    logger.error(error)
-    // return with 500
-    return errorResponse(500, 'server error', logger)
   }
-}
+)
 
 function createCloudEvent(providerId, eventCode, payload) {
   let cloudevent = new CloudEvent({
@@ -87,4 +62,5 @@ function createCloudEvent(providerId, eventCode, payload) {
   });
   return cloudevent
 }
+
 exports.main = main
