@@ -61,7 +61,10 @@ function App (props) {
   // Methods
 
   // error handler on UI rendering failure
-  function onError (e, componentStack) { }
+  function onError (e, componentStack) {
+    console.error('UI rendering error:', e.message)
+    console.error('Component stack:', componentStack)
+  }
 
   // component to show if UI fails rendering
   function fallbackComponent ({ componentStack, error }) {

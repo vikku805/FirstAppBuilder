@@ -24,10 +24,10 @@ describe('errorResponse', () => {
 
   test('(400, errorMessage, logger)', () => {
     const logger = {
-      info: jest.fn()
+      error: jest.fn()
     }
     const res = utils.errorResponse(400, 'errorMessage', logger)
-    expect(logger.info).toHaveBeenCalledWith('400: errorMessage')
+    expect(logger.error).toHaveBeenCalledWith('400: errorMessage')
     expect(res).toEqual({
       error: {
         statusCode: 400,

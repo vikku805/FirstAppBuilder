@@ -30,11 +30,6 @@ async function main (params) {
     // log parameters, only if params.LOG_LEVEL === 'debug'
     logger.debug(stringParameters(params))
 
-    return {
-      sttatusCode: 200, 
-      body: {message: 'Hello ertrtrtrtrtrtrtrtrtrtrt'}
-    }
-
     // check for missing request input parameters and headers
     const requiredParams = [/* add required params */]
     const requiredHeaders = ['Authorization']
@@ -45,7 +40,7 @@ async function main (params) {
     }
 
     // extract the user Bearer token from the Authorization header
-    const token = getBearerToken(params)
+    const token = getBearerToken(params) // eslint-disable-line no-unused-vars
 
     // replace this with the api you want to access
     const apiEndpoint = 'https://adobeioruntime.net/api/v1'
@@ -68,7 +63,7 @@ async function main (params) {
     // log any server errors
     logger.error(error)
     // return with 500
-    return errorResponse(500, 'server error', logger)
+    return errorResponse(500, `server error: ${error.message}`, logger)
   }
 }
 

@@ -65,7 +65,7 @@ async function main (params) {
     // log any server errors
     logger.error(error)
     // return with 500
-    return errorResponse(500, 'server error', logger)
+    return errorResponse(500, `server error: ${error.message}`, logger)
   }
 }
 

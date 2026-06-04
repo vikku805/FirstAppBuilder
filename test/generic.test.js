@@ -51,7 +51,7 @@ describe('generic', () => {
     expect(response).toEqual({
       error: {
         statusCode: 500,
-        body: { error: 'server error' }
+        body: { error: 'server error: fake' }
       }
     })
     expect(mockLoggerInstance.error).toHaveBeenCalledWith(fakeError)
@@ -66,7 +66,7 @@ describe('generic', () => {
     expect(response).toEqual({
       error: {
         statusCode: 500,
-        body: { error: 'server error' }
+        body: { error: expect.stringContaining('404') }
       }
     })
     // error message should contain 404
