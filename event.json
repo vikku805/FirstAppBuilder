@@ -1,0 +1,10 @@
+{
+  "runtime_action": "adobeappbuilder/__secured_generic",
+  "name": "Postman Sync",
+  "description": "Sample description",
+  "delivery_type": "webhook",
+  "events_of_interest": [{
+    "provider_id": "71893478-b36b-4bc9-8f88-1f43680be6b4",
+    "event_code": "com.postman.productsold"
+  }]
+}
