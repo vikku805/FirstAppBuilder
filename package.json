@@ -39,6 +39,11 @@
     "lint": "eslint --ignore-pattern web-src --no-error-on-unmatched-pattern test src actions",
     "lint:fix": "npm run lint -- --fix"
   },
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!(uuid|cloudevents|@adobe/aio-commerce-lib-auth|@adobe/aio-commerce-lib-core)/)"
+    ]
+  },
   "engines": {
     "node": ">=18"
   }

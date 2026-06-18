@@ -2,6 +2,14 @@
 * <license header>
 */
 
+jest.mock('uuid', () => ({
+  v4: jest.fn(() => 'fake-uuid')
+}))
+
+jest.mock('cloudevents', () => ({
+  CloudEvent: jest.fn().mockImplementation((opts) => opts)
+}))
+
 jest.mock('@adobe/aio-sdk', () => ({
   Core: {
     Logger: jest.fn()
