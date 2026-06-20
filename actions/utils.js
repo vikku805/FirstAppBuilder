@@ -116,8 +116,8 @@ function getBearerToken (params) {
  *
  */
 function errorResponse (statusCode, message, logger) {
-  if (logger && typeof logger.info === 'function') {
-    logger.info(`${statusCode}: ${message}`)
+  if (logger && typeof logger.error === 'function') {
+    logger.error(`${statusCode}: ${message}`)
   }
   return {
     error: {

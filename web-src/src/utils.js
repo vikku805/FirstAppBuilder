@@ -56,7 +56,12 @@ async function actionWebInvoke (actionUrl, headers = {}, params = {}, options = 
 
 export async function callAction(props, action, body = {}) {
   const actions = require('./config.json')
-  const res = await fetch(actions[action], {
+  const actionUrl = actions[action]
+  if (!actionUrl) {
+    throw new Error(`Action '${action}' not found in config`)
+  }
+
+  const res = await fetch(actionUrl, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -67,6 +72,11 @@ export async function callAction(props, action, body = {}) {
       ...body
     })
   })
+
+  if (!res.ok) {
+    const errorText = await res.text()
+    throw new Error(`Action '${action}' failed with status ${res.status}: ${errorText}`)
+  }
 
   return await res.json()
 }
