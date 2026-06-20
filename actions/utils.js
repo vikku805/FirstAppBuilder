@@ -20,7 +20,22 @@ function stringParameters (params) {
   if (headers.authorization) {
     headers = { ...headers, authorization: '<hidden>' }
   }
-  return JSON.stringify({ ...params, __ow_headers: headers })
+  const redactedParams = { ...params, __ow_headers: headers }
+
+  // redact known sensitive parameter keys
+  const sensitiveKeys = [
+    'apiKey', 'COMMERCE_CONSUMER_KEY', 'COMMERCE_CONSUMER_SECRET',
+    'COMMERCE_ACCESS_TOKEN', 'COMMERCE_ACCESS_TOKEN_SECRET',
+    'OAUTH_CLIENT_ID', 'OAUTH_CLIENT_SECRET',
+    'OAUTH_TECHNICAL_ACCOUNT_ID', 'OAUTH_TECHNICAL_ACCOUNT_EMAIL'
+  ]
+  for (const key of sensitiveKeys) {
+    if (redactedParams[key] !== undefined) {
+      redactedParams[key] = '<hidden>'
+    }
+  }
+
+  return JSON.stringify(redactedParams)
 }
 
 /**

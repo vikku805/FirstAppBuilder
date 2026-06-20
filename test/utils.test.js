@@ -51,6 +51,28 @@ describe('stringParameters', () => {
     expect(utils.stringParameters(params)).toEqual(expect.stringContaining('"authorization":"<hidden>"'))
     expect(utils.stringParameters(params)).not.toEqual(expect.stringContaining('secret'))
   })
+  test('redacts sensitive parameter keys', () => {
+    const params = {
+      a: 1,
+      apiKey: 'my-secret-key',
+      COMMERCE_CONSUMER_KEY: 'consumer-key',
+      COMMERCE_CONSUMER_SECRET: 'consumer-secret',
+      COMMERCE_ACCESS_TOKEN: 'access-token',
+      COMMERCE_ACCESS_TOKEN_SECRET: 'token-secret',
+      __ow_headers: {}
+    }
+    const result = utils.stringParameters(params)
+    expect(result).toEqual(expect.stringContaining('"apiKey":"<hidden>"'))
+    expect(result).toEqual(expect.stringContaining('"COMMERCE_CONSUMER_KEY":"<hidden>"'))
+    expect(result).toEqual(expect.stringContaining('"COMMERCE_CONSUMER_SECRET":"<hidden>"'))
+    expect(result).toEqual(expect.stringContaining('"COMMERCE_ACCESS_TOKEN":"<hidden>"'))
+    expect(result).toEqual(expect.stringContaining('"COMMERCE_ACCESS_TOKEN_SECRET":"<hidden>"'))
+    expect(result).not.toEqual(expect.stringContaining('my-secret-key'))
+    expect(result).not.toEqual(expect.stringContaining('consumer-key'))
+    expect(result).not.toEqual(expect.stringContaining('consumer-secret'))
+    expect(result).not.toEqual(expect.stringContaining('access-token'))
+    expect(result).not.toEqual(expect.stringContaining('token-secret'))
+  })
 })
 
 describe('checkMissingRequestInputs', () => {

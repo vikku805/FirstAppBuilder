@@ -13,13 +13,10 @@ import { About } from './About'
 import {Product} from './Product'
 
 function App (props) {
-  console.log('runtime object:', props.runtime)
-  console.log('ims object:', props.ims)
-
   // use exc runtime event handlers
   // respond to configuration change events (e.g. user switches org)
-  props.runtime.on('configuration', ({ imsOrg, imsToken, locale }) => {
-    console.log('configuration change', { imsOrg, imsToken, locale })
+  props.runtime.on('configuration', ({ imsOrg, locale }) => {
+    console.log('configuration change', { imsOrg, locale })
   })
   // respond to history change events
   props.runtime.on('history', ({ type, path }) => {
@@ -70,7 +67,7 @@ function App (props) {
         <h1 style={{ textAlign: 'center', marginTop: '20px' }}>
           Something went wrong :(
         </h1>
-        <pre>{componentStack + '\n' + error.message}</pre>
+        <p>Please try refreshing the page. If the problem persists, contact support.</p>
       </React.Fragment>
     )
   }
