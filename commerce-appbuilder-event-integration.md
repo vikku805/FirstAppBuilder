@@ -308,3 +308,11 @@ For Magento Open Source, custom integrations can be implemented using:
 * Adobe I/O Custom Events
 
 This project demonstrates the custom event integration approach using App Builder and Adobe I/O Events.
+#Custom Commerce Action Fetching Product Data by SKU
+
+<img width="1907" height="862" alt="image" src="https://github.com/user-attachments/assets/4b2ab77f-a369-463f-9b05-58f965f3cf01" />
+
+#Custom Adobe I/O Event Successfully Published and Processed
+
+<img width="1901" height="813" alt="Screenshot 2026-06-04 151956" src="https://github.com/user-attachments/assets/1d88b4e0-e163-42fa-97d3-6a2036dcdd90" />
+
