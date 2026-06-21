@@ -1,7 +1,13 @@
 
+# Claude Code
+.claude/
+
 # package directories
 node_modules
 jspm_packages
+
+# Medusa OMS app (separate standalone project — do not commit into this repo)
+my-oms/
 
 # build
 build

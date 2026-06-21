@@ -49,9 +49,10 @@ async function main (params) {
         accessTokenSecret: params.COMMERCE_ACCESS_TOKEN_SECRET
       }, logger)
     // Fetch data adobe commerce api
+    logger.info(`URL: ${params}`)
     logger.info(`URL: ${params.COMMERCE_URL}`)
     logger.info(`SKU: ${params.sku}`)
-    logger.info(`Name: ${params.operation}`)
+    logger.info(`Name: ${params.name}`)
     let response
     if (operation === 'get') {
       const result = await client.get(`products/${params.sku}`)
