@@ -2,6 +2,31 @@
 
 Welcome to my Adobe I/O Application!
 
+---
+
+## 🚀 Order Orchestration (Magento → Odoo + Medusa)
+
+> **Overview:** When a customer places an order in **Magento**, it is automatically delivered to
+> **two** systems at once — **Odoo (ERP)** and **Medusa (OMS)** — via a message queue and the
+> App Builder `order-sync` action (a "fan-out" pattern).
+
+```
+Magento → RabbitMQ → consumer → App Builder "order-sync" ─┬─► Odoo  (sale.order, confirmed)
+                                                          └─► Medusa (order, on Orders page)
+```
+
+**Key pieces:** [actions/order-sync/index.js](actions/order-sync/index.js) (fan-out) ·
+[odoo.js](actions/order-sync/odoo.js) (ERP client) ·
+[medusa.js](actions/order-sync/medusa.js) (OMS client) ·
+Magento module `Order/Orchestration` (observer + queue + consumer).
+
+📖 **For more details:**
+- **[order_orchestration_guide.md](order_orchestration_guide.md)** — full end-to-end master guide,
+  every step from the Magento observer to Medusa (setup, run, verify, troubleshoot).
+- **[medusa-oms-integration.md](medusa-oms-integration.md)** — Medusa OMS deep dive (install + code).
+
+---
+
 ## Setup
 
 - Populate the `.env` file in the project root and fill it as shown [below](#env)

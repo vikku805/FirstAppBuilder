@@ -41,3 +41,23 @@ application:
             annotations:
               require-adobe-auth: true
               final: true
+          order-sync:
+            function: actions/order-sync/index.js
+            web: 'yes'
+            runtime: nodejs:16
+            inputs:
+              LOG_LEVEL: debug
+              ODOO_URL: $ODOO_URL
+              ODOO_DB: $ODOO_DB
+              ODOO_USERNAME: $ODOO_USERNAME
+              ODOO_PASSWORD: $ODOO_PASSWORD
+              ODOO_AUTO_CONFIRM: $ODOO_AUTO_CONFIRM
+              MEDUSA_URL: $MEDUSA_URL
+              MEDUSA_API_KEY: $MEDUSA_API_KEY
+              MEDUSA_EMAIL: $MEDUSA_EMAIL
+              MEDUSA_PASSWORD: $MEDUSA_PASSWORD
+              MEDUSA_REGION_ID: $MEDUSA_REGION_ID
+              MEDUSA_SALES_CHANNEL_ID: $MEDUSA_SALES_CHANNEL_ID
+            annotations:
+              require-adobe-auth: true
+              final: true
