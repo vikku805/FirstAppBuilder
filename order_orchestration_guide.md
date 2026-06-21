@@ -240,6 +240,33 @@ Aur dashboards: **Odoo → Sales → Orders** · **Medusa → Orders**. 🎉
 
 ---
 
+## 📸 Live demo — screenshots (step by step)
+
+Ek real run ke screenshots — setup se le kar order dono dashboards me dikhne tak.
+(Images `docs/images/` folder me hain.)
+
+**Step A — Medusa OMS setup (admin account banao)**
+
+![Medusa setup](docs/images/00-medusa-setup.png)
+
+**Step B — RabbitMQ: order message queue me flow ho raha hai (`order.export`)**
+
+![RabbitMQ dashboard](docs/images/01-rabbitmq.png)
+
+**Step C — Odoo (ERP): order Sales → Orders me aa gaya**
+
+![Odoo Sales Orders](docs/images/02-odoo-orders.png)
+
+**Step D — Medusa (OMS): order Orders page me aa gaya (multi-channel ready)**
+
+![Medusa Orders](docs/images/03-medusa-orders.png)
+
+> 🖼️ **Images add karne ke liye:** apne 4 screenshots ko `docs/images/` folder me **exact in
+> naam** se save karo — phir guide me automatically render ho jayenge:
+> `00-medusa-setup.png` · `01-rabbitmq.png` · `02-odoo-orders.png` · `03-medusa-orders.png`
+
+---
+
 ## 7. Verify each hop (jab kuch na dikhe)
 
 | Hop | Check |
